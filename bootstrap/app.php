@@ -12,7 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Stateless JSON API called by the iOS Shortcut; protected by RequireApiKey instead.
+        $middleware->validateCsrfTokens(except: ['api/bmw/*']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
